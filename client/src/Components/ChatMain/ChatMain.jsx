@@ -104,9 +104,20 @@ function ChatMain() {
                     />
                 </div>
                 <div className='flex justify-between'>
-                    <button className='cursor-pointer hover:scale-105'>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="40px" fill="#fff"><path d="M446.67-446.67H200v-66.66h246.67V-760h66.66v246.67H760v66.66H513.33V-200h-66.66v-246.67Z" /></svg>
-                    </button>
+                    <div className="hover:scale-105">
+                        <label htmlFor="fileInput" className='cursor-pointer'>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="40px" fill="#fff">
+                                <path d="M446.67-446.67H200v-66.66h246.67V-760h66.66v246.67H760v66.66H513.33V-200h-66.66v-246.67Z" />
+                            </svg>
+                        </label>
+                        <input
+                            id="fileInput"
+                            type="file"
+                            accept="image/*,video/*"
+                            className="hidden"
+                        />
+                    </div>
+
                     <button
                         className='bg-gray-300 hover:bg-gray-100 border rounded-full select-none cursor-pointer hover:scale-105 transition-all duration-200'
                         onClick={handleSendMessage}
