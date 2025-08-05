@@ -100,7 +100,7 @@ function ChatMain() {
                         onKeyDown={(e => { e.key === 'Enter' && handleSendMessage(e) })}
                         placeholder="Type your message here..."
                         disabled={isLoading}
-                        className="flex-grow py-2 px-4 text-white border border-gray-300 rounded-full  focus:outline-none focus:ring-2 focus:ring-blue-400 transition-shadow"
+                        className="flex-grow py-2 px-4 text-white rounded-full  focus:outline-none focus:ring-2 focus:ring-blue-400 transition-shadow"
                     />
                 </div>
                 <div className='flex justify-between'>
