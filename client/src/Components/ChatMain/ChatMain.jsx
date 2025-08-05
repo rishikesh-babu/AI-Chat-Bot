@@ -4,6 +4,7 @@ function ChatMain() {
     const [messages, setMessages] = useState([
         { id: 1, text: 'Hello! How can I help you today?', sender: 'bot' },
     ]);
+    const [fileInput, setFileInput] = useState(null);
     const [newMessage, setNewMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const messagesEndRef = useRef(null);
@@ -52,6 +53,21 @@ function ChatMain() {
         }
     };
 
+    function handleFileChange(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const fileURL = URL.createObjectURL(file);
+            setFileInput({
+                url: fileURL,
+                file
+            })
+        } else {
+            setFileInput(null);
+        }
+    }
+
+    console.log('fileInput :>> ', fileInput);
+
     return (
         <div className="h-[100dvh] bg-gray-900 text-gray-200 font-sans flex flex-col">
             <header className="sticky top-0 z-10 bg-gray-800/50 backdrop-blur-sm border-b border-gray-700">
@@ -92,6 +108,21 @@ function ChatMain() {
             </main>
 
             <div className="p-4 m-2 sm:mx-auto sm:w-full max-w-2xl border border-white rounded-2xl flex flex-col gap-3 ">
+                {fileInput && (
+                    <div className="p-2 w-[30%] aspect-square relative border border-gray-700 bg-gray-900 rounded-xl overflow-hidden">
+                        {fileInput.file.type.startsWith('video/') ?? (
+                            <video src={fileInput.url} controls autoPlay></video>
+                        )}
+                        {fileInput.file.type.startsWith('image/') ?? (
+                            <img
+                                src={fileInput.url}
+                                alt="Preview"
+                                className="size-full object-cover rounded-lg"
+                            />
+                        )}
+                    </div>
+                )}
+
                 <div className="flex items-center gap-2" onSubmit={handleSendMessage}>
                     <input
                         type="text"
@@ -115,6 +146,7 @@ function ChatMain() {
                             type="file"
                             accept="image/*,video/*"
                             className="hidden"
+                            onChange={handleFileChange}
                         />
                     </div>
 
