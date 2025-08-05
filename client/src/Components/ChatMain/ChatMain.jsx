@@ -53,20 +53,24 @@ function ChatMain() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-900 flex flex-col justify-between">
-            <header className=" p-4 text-center shadow-md">
-                <div className="font-bold text-2xl text-gray-300">AI Chat Bot</div>
+        <div className="min-h-screen bg-gray-900 text-gray-200 font-sans flex flex-col">
+            <header className="sticky top-0 z-10 bg-gray-800/50 backdrop-blur-sm border-b border-gray-700">
+                <div className="max-w-4xl mx-auto p-4">
+                    <h1 className="text-xl font-bold text-center bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
+                        AiChatBot
+                    </h1>
+                </div>
             </header>
-            <main className="flex-grow p-4 overflow-y-auto  flex flex-col gap-4">
+            <main className="flex-grow p-6 w-full max-w-4xl mx-auto overflow-y-auto flex flex-col gap-6">
                 {messages.map((message) => (
                     <div
                         key={message.id}
-                        className={`flex flex-col ${message.sender === 'user' ? 'items-end' : 'items-start'}`}
+                        className={`flex flex-col animate-fade-in-up ${message.sender === 'user' ? 'items-end' : 'items-start'}`}
                     >
                         <div
-                            className={`py-2 px-4 rounded-2xl max-w-[75%] break-words ${message.sender === 'user'
-                                ? 'bg-blue-500 text-white rounded-br-none'
-                                : 'bg-gray-200 text-black rounded-bl-none'
+                            className={`py-3 px-5 rounded-2xl max-w-[80%] break-words shadow-lg ${message.sender === 'user'
+                                ? 'bg-gradient-to-br from-blue-600 to-purple-600 text-white rounded-br-lg'
+                                : 'bg-gray-700 text-gray-200 rounded-bl-lg'
                                 }`}
                         >
                             <p>{message.text}</p>
@@ -87,12 +91,13 @@ function ChatMain() {
                 <div ref={messagesEndRef} />
             </main>
 
-            <div className="p-4 m-2 border border-white rounded-2xl flex flex-col gap-3 ">
+            <div className="p-4 m-2 sm:mx-auto sm:w-full max-w-2xl border border-white rounded-2xl flex flex-col gap-3 ">
                 <div className="flex items-center gap-2" onSubmit={handleSendMessage}>
                     <input
                         type="text"
                         value={newMessage}
                         onChange={(e) => setNewMessage(e.target.value)}
+                        onKeyDown={(e => { e.key === 'Enter' && handleSendMessage(e) })}
                         placeholder="Type your message here..."
                         disabled={isLoading}
                         className="flex-grow py-2 px-4 text-white border border-gray-300 rounded-full  focus:outline-none focus:ring-2 focus:ring-blue-400 transition-shadow"
@@ -100,17 +105,17 @@ function ChatMain() {
                 </div>
                 <div className='flex justify-between'>
                     <button className='cursor-pointer hover:scale-105'>
-                      <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="40px" fill="#fff"><path d="M446.67-446.67H200v-66.66h246.67V-760h66.66v246.67H760v66.66H513.33V-200h-66.66v-246.67Z"/></svg>  
+                        <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="40px" fill="#fff"><path d="M446.67-446.67H200v-66.66h246.67V-760h66.66v246.67H760v66.66H513.33V-200h-66.66v-246.67Z" /></svg>
                     </button>
                     <button
                         className='bg-gray-300 hover:bg-gray-100 border rounded-full select-none cursor-pointer hover:scale-105 transition-all duration-200'
+                        onClick={handleSendMessage}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="black"><path d="M452-244v-400L282-477l-42-43 241-241 241 241-42 42-168-168v402h-60Z" /></svg>
                     </button>
                 </div>
             </div>
         </div>
-
     )
 }
 
