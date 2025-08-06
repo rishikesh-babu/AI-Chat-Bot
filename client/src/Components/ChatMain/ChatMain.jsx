@@ -112,7 +112,7 @@ function ChatMain() {
 
             <footer className="p-4 m-2 sm:mx-auto sm:w-full max-w-2xl bg-gray-700/90 border-none rounded-2xl flex flex-col gap-3 ">
                 {fileInput && (
-                    <div className="p-2 w-[30%] aspect-square relative border border-gray-700 bg-gray-900s rounded-xl overflow-hidden ">
+                    <div className="p-2 w-[30%] aspect-square relative border border-gray-700 bg-gray-800/40 rounded-xl overflow-hidden ">
                         <div onClick={() => setFileInput(null)} className='absolute z-10 right-2 cursor-pointer hover:scale-105 transition-all duration-200'>
                             <svg xmlns="http://www.w3.org/2000/svg" height="25px" viewBox="0 -960 960 960" width="25px" fill="#ffff"><path d="m291-240-51-51 189-189-189-189 51-51 189 189 189-189 51 51-189 189 189 189-51 51-189-189-189 189Z" /></svg>
                         </div>
