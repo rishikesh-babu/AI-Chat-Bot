@@ -110,16 +110,16 @@ function ChatMain() {
             <div className="p-4 m-2 sm:mx-auto sm:w-full max-w-2xl border border-white rounded-2xl flex flex-col gap-3 ">
                 {fileInput && (
                     <div className="p-2 w-[30%] aspect-square relative border border-gray-700 bg-gray-900 rounded-xl overflow-hidden">
-                        {fileInput.file.type.startsWith('video/') ?? (
-                            <video src={fileInput.url} controls autoPlay></video>
-                        )}
-                        {fileInput.file.type.startsWith('image/') ?? (
+                        {fileInput.file.type.startsWith('video/') ? (
+                            <video src={fileInput.url} controls></video>
+                        ) : ' '}
+                        {fileInput.file.type.startsWith('image/') ? (
                             <img
                                 src={fileInput.url}
                                 alt="Preview"
                                 className="size-full object-cover rounded-lg"
                             />
-                        )}
+                        ) : ''}
                     </div>
                 )}
 
