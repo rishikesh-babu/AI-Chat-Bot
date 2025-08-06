@@ -55,6 +55,7 @@ function ChatMain() {
 
     function handleFileChange(e) {
         const file = e.target.files[0];
+        console.log('file :>> ', file);
         if (file) {
             const fileURL = URL.createObjectURL(file);
             setFileInput({
@@ -78,7 +79,7 @@ function ChatMain() {
                 </div>
             </header>
 
-            <main className=" p-6 w-full max-w-4xl mx-auto overflow-y-auto flex flex-col gap-6">
+            <main className="grow p-6 w-full max-w-4xl mx-auto overflow-y-auto flex flex-col gap-6">
                 {messages.map((message) => (
                     <div
                         key={message.id}
@@ -109,9 +110,9 @@ function ChatMain() {
                 <div ref={messagesEndRef} />
             </main>
 
-            <div className="p-4 m-2 sm:mx-auto sm:w-full max-w-2xl border border-white rounded-2xl flex flex-col gap-3 ">
+            <footer className="p-4 m-2 sm:mx-auto sm:w-full max-w-2xl bg-gray-700/90 border-none rounded-2xl flex flex-col gap-3 ">
                 {fileInput && (
-                    <div className="p-2 w-[30%] aspect-square relative border border-gray-700 bg-gray-900 rounded-xl overflow-hidden">
+                    <div className="p-2 w-[30%] aspect-square relative border border-gray-700 bg-gray-900s rounded-xl overflow-hidden ">
                         <div onClick={() => setFileInput(null)} className='absolute z-10 right-2 cursor-pointer hover:scale-105 transition-all duration-200'>
                             <svg xmlns="http://www.w3.org/2000/svg" height="25px" viewBox="0 -960 960 960" width="25px" fill="#ffff"><path d="m291-240-51-51 189-189-189-189 51-51 189 189 189-189 51 51-189 189 189 189-51 51-189-189-189 189Z" /></svg>
                         </div>
@@ -137,7 +138,7 @@ function ChatMain() {
                         onKeyDown={(e => { e.key === 'Enter' && handleSendMessage(e) })}
                         placeholder="Type your message here..."
                         disabled={isLoading}
-                        className="flex-grow py-2 px-4 text-white rounded-full  focus:outline-none focus:ring-2 focus:ring-blue-400 transition-shadow"
+                        className="flex-grow py-2 px-4 text-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition-shadow"
                     />
                 </div>
                 <div className='flex justify-between'>
@@ -163,7 +164,7 @@ function ChatMain() {
                         <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="black"><path d="M452-244v-400L282-477l-42-43 241-241 241 241-42 42-168-168v402h-60Z" /></svg>
                     </button>
                 </div>
-            </div>
+            </footer>
         </div>
     )
 }
