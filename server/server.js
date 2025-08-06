@@ -18,13 +18,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
     console.log('req.method :>> ', req.method);
     console.log('req.url :>> ', req.url);
+    next();
 })
 
 app.get('/', (req, res) => {
     res.status(200).json({ message: 'Hello World'})
 })
 
-app.use('api', apiRouter);
+app.use('/api', apiRouter);
 
 app.listen(port, (err) => {
     if (!err) {
