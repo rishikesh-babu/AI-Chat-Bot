@@ -35,7 +35,7 @@ function ChatMain() {
 
         axiosInstance({
             method: 'POST',
-            baseURL: '/chat',
+            url: '/chat',
             data: { data: newMessage }
         })
             .then((res) => {
