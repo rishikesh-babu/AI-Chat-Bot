@@ -10,6 +10,11 @@ function ChatMain() {
     const [newMessage, setNewMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const messagesEndRef = useRef(null);
+    const inputRef = useRef(null)
+
+    useEffect(() => {
+        inputRef?.current?.focus()
+    }, [isLoading, messages])
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -133,6 +138,7 @@ function ChatMain() {
                     <input
                         type="text"
                         value={newMessage}
+                        ref={inputRef}
                         onChange={(e) => setNewMessage(e.target.value)}
                         onKeyDown={(e => { e.key === 'Enter' && handleSendMessage(e) })}
                         placeholder="Type your message here..."
