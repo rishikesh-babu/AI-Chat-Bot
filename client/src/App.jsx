@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import ChatMain from './Components/ChatMain/ChatMain'
-import axiosInstance from './config/axiosInstance'
+import axios from 'axios'
 
 function App() {
     useEffect(() => {
-        axiosInstance({ 
-            url: '/'
+        axios({ 
+            url: `${import.meta.env.VITE_BASE_URL}`
         })
     }, [])
     return (
