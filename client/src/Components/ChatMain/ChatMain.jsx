@@ -35,7 +35,7 @@ function ChatMain() {
 
         axiosInstance({
             method: 'POST',
-            baseURL: 'http://localhost:3000/api/chat',
+            baseURL: '/chat',
             data: { data: newMessage }
         })
             .then((res) => {
