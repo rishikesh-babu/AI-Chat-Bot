@@ -1,24 +1,33 @@
-const { chatWithContext } = require('../services/chatService');
-const { v4: uuidv4 } = require('uuid');
+require('dotenv').config()
 
-async function chatHandler(req, res) {
-  let { sessionId, message } = req.body;
+const googleGenAi = require('@google/genai')
+const ai = new googleGenAi.GoogleGenAI({
+    apiKey: process.env.API_KEY
+})
 
-  if (!message) {
-    return res.status(400).json({ error: 'Message is required' });
-  }
+async function chatHandler(req, res, next) {
+    try {
+        let data = req.body.data
+        data = data.trim()
 
-  if (!sessionId) {
-    sessionId = uuidv4();
-  }
+        if (!data) {
+            return res.status(400).json({ message: 'Message required' })
+        }
 
-  try {
-    const reply = await chatWithContext(sessionId, message);
-    res.json({ sessionId, reply });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Chat error' });
-  }
+        const response = await ai.models.generateContent({
+            model: 'gemini-3-flash-preview',
+            contents: data
+        })
+
+        if (!response.text) { 
+            return res.status(400).json({ message: "Didn't get any response" })
+        }
+
+        return res.status(200).json({ message: 'Generated response✅', data: response.text })
+
+    } catch (err) {
+        next(err)
+    }
 }
 
 module.exports = { chatHandler };
