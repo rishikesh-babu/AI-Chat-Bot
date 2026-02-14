@@ -3,23 +3,21 @@ const app = express();
 const dotenv = require('dotenv');
 const cors = require('cors');
 const apiRouter = require('./routes');
-const port = 3000;
 
 dotenv.config();
+const port = process.env.PORT 
 
-// app.use(cors({
-//     origin: process.env.CLIENT_DOMAIN,  // Frontend URL
-//     credentials: true // Allow cookies and authorization headers
-// }));
-
-app.use(cors())
+app.use(cors({
+    credentials: true, 
+    origin: process.env.CLIENT_DOMAIN
+}))
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.listen(port, (err) => {
     if (!err) {
-        console.log('Server is running at port: ', port);
+        console.log('Server is running at port:', port);
     } else {
         console.log('err :>> ', err);
     }

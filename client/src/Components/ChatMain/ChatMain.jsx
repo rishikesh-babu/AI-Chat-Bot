@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
+import axiosInstance from '../../config/axiosInstance';
 
 function ChatMain() {
     const [messages, setMessages] = useState([
@@ -22,40 +24,39 @@ function ChatMain() {
         if (!newMessage.trim()) return;
 
         const userMessage = {
-            id: Date.now(),
             text: newMessage,
-            sender: 'user',
-        };
+            id: Date.now(),
+            sender: 'user'
+        }
 
         setMessages((prevMessages) => [...prevMessages, userMessage]);
         setNewMessage('');
         setIsLoading(true);
 
-        // Mock API call
-        try {
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            const botMessage = {
-                id: Date.now() + 1,
-                text: `This is a simulated response to "${newMessage}"`,
-                sender: 'bot',
-            };
-            setMessages((prevMessages) => [...prevMessages, botMessage]);
-        } catch (error) {
-            console.error("Error sending message:", error);
-            const errorMessage = {
-                id: Date.now() + 1,
-                text: 'Sorry, something went wrong. Please try again.',
-                sender: 'bot',
-            };
-            setMessages((prevMessages) => [...prevMessages, errorMessage]);
-        } finally {
-            setIsLoading(false);
-        }
+        axiosInstance({
+            method: 'POST',
+            baseURL: 'http://localhost:3000/api/chat',
+            data: { data: newMessage }
+        })
+            .then((res) => {
+                const resMessage = {
+                    id: Date.now(),
+                    text: res?.data?.data,
+                    sender: 'bot'
+                }
+
+                setMessages((prevMessages) => [...prevMessages, resMessage])
+            })
+            .catch((err) => {
+                console.log('err :>> ', err);
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
     };
 
     function handleFileChange(e) {
         const file = e.target.files[0];
-        console.log('file :>> ', file);
         if (file) {
             const fileURL = URL.createObjectURL(file);
             setFileInput({
@@ -66,8 +67,6 @@ function ChatMain() {
             setFileInput(null);
         }
     }
-
-    console.log('fileInput :>> ', fileInput);
 
     return (
         <div className="h-[100dvh] bg-gray-900 text-gray-200 font-sans flex flex-col justify-between">
